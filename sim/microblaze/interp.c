@@ -17,11 +17,29 @@
    along with this program; if not, see <http://www.gnu.org/licenses/>.  */
 
 #include "config.h"
+
+#ifdef __MINGW32__
+/* mingw-w64 defines the SIG* defines if _POSIX is defined */
+#define _POSIX
+#endif
+
 #include <signal.h>
+
+#ifdef __MINGW32__
+#ifndef SIGTRAP
+#define SIGTRAP 5
+#endif
+#ifndef SIGBUS
+#define SIGBUS 10
+#endif
+#ifndef SIGQUIT
+#define SIGQUIT 3
+#endif
+#endif
+
 #include "sysdep.h"
-#include <sys/times.h>
 #include <sys/param.h>
-#include <netinet/in.h>	/* for byte ordering macros */
+
 #include "bfd.h"
 #include "gdb/callback.h"
 #include "libiberty.h"

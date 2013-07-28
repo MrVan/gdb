@@ -31,6 +31,9 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h> /* for abort */
+#include <unistd.h> /* for exit */
+#include <string.h> /* for strlen, memcpy */
 
 #define MAX_NR_STUFF 42
 

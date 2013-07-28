@@ -331,7 +331,7 @@ void::model-static::model_trace_release:model_data *model_ptr, model_busy *busy
 	  }
 	}
 	if (busy->vscr_busy)
-	  TRACE(trace_model, ("VSCR Register is now available.\n", spr_name(busy->spr_busy)));
+	  TRACE(trace_model, ("VSCR Register %s is now available.\n", spr_name(busy->spr_busy)));
 
 # Trace making registers busy
 void::model-static::model_trace_make_busy:model_data *model_ptr, unsigned32 int_mask, unsigned32 fp_mask, unsigned32 cr_mask

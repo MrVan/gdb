@@ -13,6 +13,21 @@
 	* help.c: Likewise.
 	* interf.c: Likewise.
 
+2012-08-16  Ralf Corsépius  <ralf.corsepius@rtems.org>
+
+	* func.c, sis.c: Include <inttypes.h>.
+	Apply PRI* macros to print 64 bit types.
+	* sis.h: Include <stdint.h>.
+	Derive 64 bit types from POSIX 64 types.
+	Don't define UINT64_MAX if already defined.
+
+2012-07-20  Ralf Corsépius  <ralf.corsepius@rtems.org>
+
+	* Makefile.in, configure.ac: Backport from rtems-4.11-gdb-7.4.1.
+	Use system-readline. Fix EXEEXT handling.
+	* erc32.c: Backport from rtems-4.11-gdb-7.4.1.
+	* configure: Regenerate.
+
 2012-06-15  Joel Brobecker  <brobecker@adacore.com>
 
 	* sys.h: Include "config.h".

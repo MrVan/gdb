@@ -38,6 +38,8 @@
 #include <stdlib.h>
 #endif
 
+#include <inttypes.h>
+
 #include <signal.h> /* For SIGPROCMASK et al. */
 
 typedef enum {
@@ -418,14 +420,14 @@ update_time_from_event (SIM_DESC sd)
 	   event = event->next, i++)
 	{
 	  ETRACE ((_ETRACE,
-		   "event time-from-event - time %ld, delta %ld - event %d, tag 0x%lx, time %ld, handler 0x%lx, data 0x%lx%s%s\n",
-		   (long)current_time,
-		   (long)events->time_from_event,
+		   "event time-from-event - time %" PRId64 ", delta %" PRId64 " - event %d, tag 0x%p, time %" PRId64 ", handler 0x%p, data 0x%p%s%s\n",
+		   current_time,
+		   events->time_from_event,
 		   i,
-		   (long)event,
-		   (long)event->time_of_event,
-		   (long)event->handler,
-		   (long)event->data,
+		   event,
+		   event->time_of_event,
+		   event->handler,
+		   event->data,
 		   (event->trace != NULL) ? ", " : "",
 		   (event->trace != NULL) ? event->trace : ""));
 	}
@@ -525,12 +527,12 @@ sim_events_schedule_vtracef (SIM_DESC sd,
     new_event->trace = NULL;
   insert_sim_event (sd, new_event, delta_time);
   ETRACE ((_ETRACE,
-	   "event scheduled at %ld - tag 0x%lx - time %ld, handler 0x%lx, data 0x%lx%s%s\n",
+	   "event scheduled at %ld - tag 0x%p - time %ld, handler 0x%p, data 0x%p%s%s\n",
 	   (long)sim_events_time (sd),
-	   (long)new_event,
+	   new_event,
 	   (long)new_event->time_of_event,
-	   (long)new_event->handler,
-	   (long)new_event->data,
+	   new_event->handler,
+	   new_event->data,
 	   (new_event->trace != NULL) ? ", " : "",
 	   (new_event->trace != NULL) ? new_event->trace : ""));
   return new_event;
@@ -577,12 +579,12 @@ sim_events_schedule_after_signal (SIM_DESC sd,
 #endif
 
   ETRACE ((_ETRACE,
-	   "signal scheduled at %ld - tag 0x%lx - time %ld, handler 0x%lx, data 0x%lx\n",
-	   (long)sim_events_time (sd),
-	   (long)new_event,
-	   (long)new_event->time_of_event,
-	   (long)new_event->handler,
-	   (long)new_event->data));
+	   "signal scheduled at %" PRId64 " - tag 0x%p - time %" PRId64 ", handler 0x%p, data 0x%p\n",
+	   sim_events_time (sd),
+	   new_event,
+	   new_event->time_of_event,
+	   new_event->handler,
+	   new_event->data));
 }
 #endif
 
@@ -613,12 +615,12 @@ sim_events_watch_clock (SIM_DESC sd,
   events->watchpoints = new_event;
   events->work_pending = 1;
   ETRACE ((_ETRACE,
-	  "event watching clock at %ld - tag 0x%lx - wallclock %ld, handler 0x%lx, data 0x%lx\n",
-	   (long)sim_events_time (sd),
-	   (long)new_event,
-	   (long)new_event->wallclock,
-	   (long)new_event->handler,
-	   (long)new_event->data));
+	  "event watching clock at %" PRId64 " - tag 0x%p - wallclock %d, handler 0x%p, data 0x%p\n",
+	   sim_events_time (sd),
+	   new_event,
+	   new_event->wallclock,
+	   new_event->handler,
+	   new_event->data));
   return new_event;
 }
 #endif
@@ -689,14 +691,14 @@ sim_events_watch_sim (SIM_DESC sd,
   events->watchpoints = new_event;
   events->work_pending = 1;
   ETRACE ((_ETRACE,
-	   "event watching host at %ld - tag 0x%lx - host-addr 0x%lx, 0x%lx..0x%lx, handler 0x%lx, data 0x%lx\n",
-	   (long)sim_events_time (sd),
-	   (long)new_event,
-	   (long)new_event->host_addr,
-	   (long)new_event->lb,
-	   (long)new_event->ub,
-	   (long)new_event->handler,
-	   (long)new_event->data));
+	   "event watching host at %" PRId64 " - tag 0x%p - host-addr 0x%p, 0x%x..0x%x, handler 0x%p, data 0x%p\n",
+	   sim_events_time (sd),
+	   new_event,
+	   new_event->host_addr,
+	   new_event->lb,
+	   new_event->ub,
+	   new_event->handler,
+	   new_event->data));
   return new_event;
 }
 #endif
@@ -769,14 +771,14 @@ sim_events_watch_core (SIM_DESC sd,
   events->watchpoints = new_event;
   events->work_pending = 1;
   ETRACE ((_ETRACE,
-	   "event watching host at %ld - tag 0x%lx - host-addr 0x%lx, 0x%lx..0x%lx, handler 0x%lx, data 0x%lx\n",
-	   (long)sim_events_time (sd),
-	   (long)new_event,
-	   (long)new_event->host_addr,
-	   (long)new_event->lb,
-	   (long)new_event->ub,
-	   (long)new_event->handler,
-	   (long)new_event->data));
+	   "event watching host at %" PRId64 " - tag 0x%p - host-addr 0x%p, 0x%x..0x%x, handler 0x%p, data 0x%p\n",
+	   sim_events_time (sd),
+	   new_event,
+	   new_event->host_addr,
+	   new_event->lb,
+	   new_event->ub,
+	   new_event->handler,
+	   new_event->data));
   return new_event;
 }
 #endif
@@ -803,12 +805,12 @@ sim_events_deschedule (SIM_DESC sd,
 	      sim_event *dead = *ptr_to_current;
 	      *ptr_to_current = dead->next;
 	      ETRACE ((_ETRACE,
-		       "event/watch descheduled at %ld - tag 0x%lx - time %ld, handler 0x%lx, data 0x%lx%s%s\n",
-		       (long) sim_events_time (sd),
-		       (long) event_to_remove,
-		       (long) dead->time_of_event,
-		       (long) dead->handler,
-		       (long) dead->data,
+		       "event/watch descheduled at %" PRId64 " - tag 0x%p - time %" PRId64 ", handler 0x%p, data 0x%p%s%s\n",
+		       sim_events_time (sd),
+		       event_to_remove,
+		       dead->time_of_event,
+		       dead->handler,
+		       dead->data,
 		       (dead->trace != NULL) ? ", " : "",
 		       (dead->trace != NULL) ? dead->trace : ""));
 	      sim_events_free (sd, dead);
@@ -819,9 +821,9 @@ sim_events_deschedule (SIM_DESC sd,
 	}
     }
   ETRACE ((_ETRACE,
-	   "event/watch descheduled at %ld - tag 0x%lx - not found\n",
-	   (long) sim_events_time (sd),
-	   (long) event_to_remove));
+	   "event/watch descheduled at %" PRId64 " - tag 0x%p - not found\n",
+	   sim_events_time (sd),
+	   event_to_remove));
 }
 #endif
 
@@ -1146,11 +1148,11 @@ sim_events_process (SIM_DESC sd)
 	  sim_event_handler *handler = to_do->handler;
 	  void *data = to_do->data;
 	  ETRACE ((_ETRACE,
-		   "event issued at %ld - tag 0x%lx - handler 0x%lx, data 0x%lx%s%s\n",
-		   (long) event_time,
-		   (long) to_do,
-		   (long) handler,
-		   (long) data,
+		   "event issued at %" PRId64 " - tag 0x%p - handler 0x%p, data 0x%p%s%s\n",
+		   event_time,
+		   to_do,
+		   handler,
+		   data,
 		   (to_do->trace != NULL) ? ", " : "",
 		   (to_do->trace != NULL) ? to_do->trace : ""));
 	  sim_events_free (sd, to_do);
@@ -1174,11 +1176,11 @@ sim_events_process (SIM_DESC sd)
       events->queue = to_do->next;
       update_time_from_event (sd);
       ETRACE ((_ETRACE,
-	       "event issued at %ld - tag 0x%lx - handler 0x%lx, data 0x%lx%s%s\n",
-	       (long) event_time,
-	       (long) to_do,
-	       (long) handler,
-	       (long) data,
+	       "event issued at %" PRId64 " - tag 0x%p - handler 0x%p, data 0x%p%s%s\n",
+	       event_time,
+	       to_do,
+	       handler,
+	       data,
 	       (to_do->trace != NULL) ? ", " : "",
 	       (to_do->trace != NULL) ? to_do->trace : ""));
       sim_events_free (sd, to_do);

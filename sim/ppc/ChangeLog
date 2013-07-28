@@ -2,6 +2,20 @@
 
 	* COPYING: Update to GPL version 3.
 
+2012-10-08  Ralf Corsépius  <ralf.corsepius@rtems.org>
+
+	* basics.h: Include stdlib.h.
+	* emul_unix.c: Include time.h.
+	* ppc-instructions: Add missing %s.
+	* vm_n.h: Use %zd to print size_t.
+
+2012-09-28  Ralf Corsépius  <ralf.corsepius@rtems.org>
+
+	Backport from gcc-7.4-rtems4.11:
+
+	* device.c, device.h: Use (void) device_error.
+	* hw_glue.c: Use %zd to print sizes.
+
 2012-06-15  Joel Brobecker  <brobecker@adacore.com>
 
 	* configure: Regenerate.

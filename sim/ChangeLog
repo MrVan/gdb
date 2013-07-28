@@ -1,3 +1,9 @@
+2013-04-02  Ralf Corsépius <ralf.corsepius@rtems.org>
+
+	* common/configure.ac: Add AC_CHECK_DECLS([strsignal]).
+	* common/nrun.c: Conditionally provide strsignal-decl.
+	* common/configure, common/config.h: Regenerate.
+
 2013-01-01  Joel Brobecker  <brobecker@adacore.com>
 
 	Update year range in copyright notice of all files.
@@ -53,6 +59,11 @@
 	* mips/basic.exp: Add mips*-mti-elf* target.
 	* configure.ac: Add mips*-mti-elf* target.
 	* configure: Regenerate.
+
+2012-07-19  Ralf Corsépius  <ralf.corsepius@rtems.org>
+
+	* common/sim-events.c: Include <inttypes.h>.
+	Avoid bogus pointer to int casts.
 
 2012-06-15  Joel Brobecker  <brobecker@adacore.com>
 

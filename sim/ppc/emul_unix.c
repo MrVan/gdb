@@ -64,6 +64,8 @@
 #include <sys/time.h>
 #endif
 
+#include <time.h>
+
 #ifndef HAVE_TERMIOS_STRUCTURE
 #undef HAVE_SYS_TERMIOS_H
 #undef HAVE_TCGETATTR

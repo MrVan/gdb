@@ -1,3 +1,17 @@
+2012-10-02  Ralf Corsépius  <ralf.corsepius@rtems.org>
+
+	* interp.c: Define SIGBUS, SIGTRAP, SIGQUIT on mingw32.
+	Extend comment on _POSIX/__MINGW32__.
+
+2012-10-02  Ralf Corsépius  <ralf.corsepius@rtems.org>
+
+	Backport from rtems-4.11-gdb-7.4:
+
+	2012-04-29  Ralf Corsépius  <ralf.corsepius@rtems.org>
+
+	* interp.c: Don't include <sys/times.h>, <netinet/in.h>.
+	Define _POSIX on mingw32.
+
 2012-06-15  Joel Brobecker  <brobecker@adacore.com>
 
 	* config.in, configure: Regenerate.

@@ -1,3 +1,7 @@
+2012-10-08  Ralf Corsépius  <ralf.corsepius@rtems.org>
+
+	* gencode.c: Include stdlib.h, unistd.h, string.h.
+
 2012-06-15  Joel Brobecker  <brobecker@adacore.com>
 
 	* config.in, configure: Regenerate.

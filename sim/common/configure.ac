@@ -51,5 +51,7 @@ AC_CHECK_TYPES(socklen_t, [], [],
 #include <sys/socket.h>
 ])
 
+AC_CHECK_DECLS([strsignal])
+
 AC_OUTPUT(Makefile,
 [case x$CONFIG_HEADERS in xcconfig.h:config.in) echo > stamp-h ;; esac])

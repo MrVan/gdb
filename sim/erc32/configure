@@ -601,8 +601,9 @@ ac_includes_default="\
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 cgen_breaks
+READLINE_CFLAGS
+READLINE_DEPS
 READLINE
-TERMCAP
 REPORT_BUGS_TEXI
 REPORT_BUGS_TO
 PKGVERSION
@@ -759,6 +760,7 @@ enable_sim_trace
 enable_sim_profile
 with_pkgversion
 with_bugurl
+with_system_readline
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1410,6 +1412,7 @@ Optional Packages:
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-pkgversion=PKG   Use PKG in the version string in place of "GDB"
   --with-bugurl=URL       Direct users to URL to report a bug
+  --with-system-readline  use installed readline library
 
 Some influential environment variables:
   CC          C compiler command
@@ -12256,7 +12259,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 12259 "configure"
+#line 12262 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12362,7 +12365,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 12365 "configure"
+#line 12368 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12865,144 +12868,82 @@ fi
 done
 
 
-# In the Cygwin environment, we need some additional flags.
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for cygwin" >&5
-$as_echo_n "checking for cygwin... " >&6; }
-if test "${sim_cv_os_cygwin+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
+
+# Check whether --with-system-readline was given.
+if test "${with_system_readline+set}" = set; then :
+  withval=$with_system_readline;
+fi
+
+
+if test "$with_system_readline" = yes; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for readline" >&5
+$as_echo_n "checking for readline... " >&6; }
+  save_LIBS="$LIBS"
+  LIBS="-lreadline $save_LIBS"
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
-#ifdef __CYGWIN__
-lose
-#endif
-_ACEOF
-if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-  $EGREP "lose" >/dev/null 2>&1; then :
-  sim_cv_os_cygwin=yes
-else
-  sim_cv_os_cygwin=no
-fi
-rm -f conftest*
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $sim_cv_os_cygwin" >&5
-$as_echo "$sim_cv_os_cygwin" >&6; }
-
-if test x$sim_cv_os_cygwin = xyes; then
-  TERMCAP='`if test -r ../../libtermcap/libtermcap.a; then echo ../../libtermcap/libtermcap.a; else echo -ltermcap; fi` -luser32'
-else
-  # Keep in sync with gdb's configure.ac list.
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing tgetent" >&5
-$as_echo_n "checking for library containing tgetent... " >&6; }
-if test "${ac_cv_search_tgetent+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
 /* Override any GCC internal prototype to avoid an error.
    Use char because int might match the return type of a GCC
    builtin and then its argument prototype would still apply.  */
 #ifdef __cplusplus
 extern "C"
 #endif
-char tgetent ();
+char add_history ();
 int
 main ()
 {
-return tgetent ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' termcap tinfo curses ncurses; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_search_tgetent=$ac_res
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext
-  if test "${ac_cv_search_tgetent+set}" = set; then :
-  break
-fi
-done
-if test "${ac_cv_search_tgetent+set}" = set; then :
-
-else
-  ac_cv_search_tgetent=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_tgetent" >&5
-$as_echo "$ac_cv_search_tgetent" >&6; }
-ac_res=$ac_cv_search_tgetent
-if test "$ac_res" != no; then :
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-  TERMCAP=$ac_cv_search_tgetent
-else
-  TERMCAP=""
-fi
-
-fi
-
-
-# We prefer the in-tree readline.  Top-level dependencies make sure
-# src/readline (if it's there) is configured before src/sim.
-if test -r ../../readline/Makefile; then
-  READLINE=../../readline/libreadline.a
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for readline in -lreadline" >&5
-$as_echo_n "checking for readline in -lreadline... " >&6; }
-if test "${ac_cv_lib_readline_readline+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lreadline $TERMCAP $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char readline ();
-int
-main ()
-{
-return readline ();
+return add_history ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_readline_readline=yes
+  READLINE=-lreadline
 else
-  ac_cv_lib_readline_readline=no
+   LIBS="-lreadline -lncurses $save_LIBS"
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char add_history ();
+int
+main ()
+{
+return add_history ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  READLINE="-lreadline -lncurses"
+else
+  as_fn_error "unable to detect readline" "$LINENO" 5
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_readline_readline" >&5
-$as_echo "$ac_cv_lib_readline_readline" >&6; }
-if test "x$ac_cv_lib_readline_readline" = x""yes; then :
-  READLINE=-lreadline
-else
-  as_fn_error "the required \"readline\" library is missing" "$LINENO" 5
-fi
 
 fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+  LIBS="$save_LIBS"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $READLINE" >&5
+$as_echo "$READLINE" >&6; }
+  READLINE_DEPS=
+  READLINE_CFLAGS=
+else
+  READLINE='../../readline/libreadline.a -lncurses'
+  READLINE_DEPS='$(READLINE)'
+  READLINE_CFLAGS='-I$(READLINE_SRC)/..'
+fi
+
+
+
 
 
 ac_sources="$sim_link_files"

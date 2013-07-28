@@ -4,6 +4,10 @@
    language is requested. */
 #undef ENABLE_NLS
 
+/* Define to 1 if you have the declaration of `strsignal', and to 0 if you
+   don't. */
+#undef HAVE_DECL_STRSIGNAL
+
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
@@ -138,6 +142,10 @@
 
 /* Define to 1 if you have the `__setfpucw' function. */
 #undef HAVE___SETFPUCW
+
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LT_OBJDIR
 
 /* Name of this package. */
 #undef PACKAGE

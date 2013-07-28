@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <inttypes.h>
 #include "sis.h"
 #include "end.h"
 #include <dis-asm.h>
@@ -640,8 +641,8 @@ show_stat(sregs)
 	sregs->nbranch;
 #endif
 
-    printf("\n Cycles       : %9d\n\r", ebase.simtime - sregs->simstart);
-    printf(" Instructions : %9d\n", sregs->ninst);
+    printf("\n Cycles       : %9" PRId64 "\n\r", ebase.simtime - sregs->simstart);
+    printf(" Instructions : %9" PRId64 "\n", sregs->ninst);
 
 #ifdef STAT
     printf("   integer    : %9.2f %%\n", 100.0 * (float) iinst / (float) sregs->ninst);
@@ -671,8 +672,8 @@ show_stat(sregs)
     printf(" Processor utilisation       : %5.2f %%\n", 100.0 * (1.0 - ((float) sregs->pwdtime / (float) stime)));
     printf(" Real-time / simulator-time  : 1/%.2f \n",
       ((float) sregs->tottime) / ((float) (stime) / (sregs->freq * 1.0E6)));
-    printf(" Simulator performance       : %d KIPS\n",sregs->ninst/tottime/1000);
-    printf(" Used time (sys + user)      : %3d s\n\n", sregs->tottime);
+    printf(" Simulator performance       : %" PRId64 " KIPS\n",sregs->ninst/tottime/1000);
+    printf(" Used time (sys + user)      : %3" PRId64 " s\n\n", sregs->tottime);
 }
 
 

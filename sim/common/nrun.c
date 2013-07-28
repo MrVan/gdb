@@ -31,6 +31,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 #endif
 #endif
 
+/* strsignal is either provided natively or by libiberty */
+#if !HAVE_DECL_STRSIGNAL
+extern char *strsignal(int sig);
+#endif
+
 #include "sim-main.h"
 
 #include "bfd.h"

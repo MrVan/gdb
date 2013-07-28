@@ -21,6 +21,8 @@
 
 #include "config.h"
 #include "ansidecl.h"
+#include <stdint.h>
+
 #include "gdb/callback.h"
 #include "gdb/remote-sim.h"
 
@@ -52,10 +54,12 @@ typedef float   float32;	/* 32-bit float */
 typedef double  float64;	/* 64-bit float */
 
 /* FIXME: what about host compilers that don't support 64-bit ints? */
-typedef unsigned long long uint64; /* 64-bit unsigned int */
-typedef long long int64;	   /* 64-bit signed int */
+typedef uint64_t uint64; /* 64-bit unsigned int */
+typedef int64_t int64;	   /* 64-bit signed int */
 
+#ifndef UINT64_MAX
 #define UINT64_MAX 18446744073709551615ULL
+#endif
 
 struct pstate {
 
