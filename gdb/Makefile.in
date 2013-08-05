@@ -576,6 +576,7 @@ ALL_TARGET_OBS = \
 	sh64-tdep.o sh-linux-tdep.o shnbsd-tdep.o sh-tdep.o \
 	sparc-linux-tdep.o sparcnbsd-tdep.o sparcobsd-tdep.o \
 	sparc-sol2-tdep.o sparc-tdep.o sparc-ravenscar-thread.o \
+	sparc-rtems-tdep.o \
 	spu-tdep.o spu-multiarch.o solib-spu.o \
 	tic6x-tdep.o tic6x-linux-tdep.o \
 	tilegx-tdep.o tilegx-linux-tdep.o \
@@ -587,7 +588,7 @@ ALL_TARGET_OBS = \
 	bsd-uthread.o \
 	nbsd-tdep.o obsd-tdep.o \
 	sol2-tdep.o \
-	solib-frv.o solib-irix.o solib-svr4.o \
+	solib-frv.o solib-irix.o solib-svr4.o solib-rtems.o \
 	solib-som.o solib-pa64.o solib-darwin.o solib-dsbt.o \
 	dbug-rom.o dink32-rom.o ppcbug-rom.o m32r-rom.o dsrec.o monitor.o \
 	remote-m32r-sdi.o remote-mips.o \
@@ -811,7 +812,7 @@ coff-pe-read.h parser-defs.h gdb_ptrace.h mips-linux-tdep.h \
 m68k-tdep.h spu-tdep.h jv-lang.h environ.h solib-irix.h amd64-tdep.h \
 doublest.h regset.h hppa-tdep.h ppc-linux-tdep.h ppc64-tdep.h rs6000-tdep.h \
 common/gdb_locale.h common/gdb_dirent.h arch-utils.h trad-frame.h gnu-nat.h \
-language.h nbsd-tdep.h solib-svr4.h \
+language.h nbsd-tdep.h solib-svr4.h solib-rtems.h \
 macroexp.h ui-file.h regcache.h tracepoint.h i386-tdep.h \
 inf-child.h p-lang.h event-top.h gdbtypes.h user-regs.h \
 regformats/regdef.h config/alpha/nm-osf3.h  config/i386/nm-i386gnu.h \
@@ -1509,8 +1510,9 @@ ALLDEPFILES = \
 	ser-go32.c ser-pipe.c ser-tcp.c ser-mingw.c \
 	sh-tdep.c sh64-tdep.c shnbsd-tdep.c shnbsd-nat.c \
 	sol2-tdep.c \
-	solib-irix.c solib-svr4.c solib-sunos.c \
+	solib-irix.c solib-svr4.c solib-sunos.c solib-rtems.c \
 	sparc-linux-nat.c sparc-linux-tdep.c \
+	sparc-rtems-tdep.c \
 	sparc-sol2-nat.c sparc-sol2-tdep.c sparc64-sol2-tdep.c \
 	sparc-nat.c sparc-tdep.c sparc64-linux-nat.c sparc64-linux-tdep.c \
 	sparc64-nat.c sparc64-tdep.c sparc64fbsd-nat.c sparc64fbsd-tdep.c \

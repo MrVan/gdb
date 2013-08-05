@@ -566,6 +566,13 @@ sparc-*-solaris2* | sparcv9-*-solaris2* | sparc64-*-solaris2*)
 			sparc-sol2-tdep.o sol2-tdep.o solib-svr4.o \
 			ravenscar-thread.o sparc-ravenscar-thread.o"
 	;;
+sparc-*-rtems*)
+	# Target: SPARC
+	gdb_target_obs="sparc-tdep.o sparc-rtems-tdep.o \
+      solib-rtems.o ravenscar-thread.o \
+      sparc-ravenscar-thread.o"
+	gdb_sim=../sim/erc32/libsim.a
+	;;
 sparc-*-*)
 	# Target: SPARC
 	gdb_target_obs="sparc-tdep.o \
@@ -690,6 +697,7 @@ case "${targ}" in
 		gdb_osabi=GDB_OSABI_FREEBSD_ELF ;;
 *-*-linux* | *-*-uclinux*)
 		gdb_osabi=GDB_OSABI_LINUX ;;
+*-*-rtems*) gdb_osabi=GDB_OSABI_RTEMS ;;
 *-*-nto*)	gdb_osabi=GDB_OSABI_QNXNTO ;;
 m68*-*-openbsd* | m88*-*-openbsd* | vax-*-openbsd*) ;;
 *-*-openbsd*)	gdb_osabi=GDB_OSABI_OPENBSD_ELF ;;
