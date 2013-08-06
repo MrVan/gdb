@@ -104,6 +104,12 @@ arm*-*-symbianelf*)
 	# Target: SymbianOS/arm
 	gdb_target_obs="arm-tdep.o arm-symbian-tdep.o"
 	;;
+arm-*-rtems*)
+	# Target: SPARC
+	gdb_target_obs="arm-tdep.o arm-rtems-tdep.o \
+                        solib-rtems.o"
+	gdb_sim=../sim/arm/libsim.a
+	;;
 arm*-*-*)
 	# Target: ARM embedded system
 	gdb_target_obs="arm-tdep.o"

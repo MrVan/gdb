@@ -395,7 +395,7 @@ rtems_read_so_list (CORE_ADDR lm,
                 strcat (tmp_name, "/");
 
               strcat (tmp_name, tmp);
-#ifdef RTEMS_DEBUG
+#if RTEMS_DEBUG
               printf ("%s %s\n", tmp_name, access(tmp_name, F_OK) ?
                       "not exist" : "exist");
 #endif
@@ -407,7 +407,7 @@ rtems_read_so_list (CORE_ADDR lm,
             }
 
         }
-#ifdef RTEMS_DEBUG
+#if RTEMS_DEBUG
       if (!exist)
         {
           printf ("\n\nSet --rpath to rtems-ld ?\n\n");
@@ -681,13 +681,15 @@ rtems_in_dynsym_resolve_code (CORE_ADDR pc)
 /* Show infrun and gdbarch_debug msg. */
 extern unsigned int debug_infrun;
 extern unsigned int gdbarch_debug;
+extern enum overlay_debugging_state overlay_debugging;
 
 static void
 set_debug (void)
 {
 #if RTEMS_DEBUG
   debug_infrun = 1;
-  gdbarch_debug = 2;
+  overlay_debugging = ovly_on;
+//  gdbarch_debug = 2;
 #endif
 }
 
