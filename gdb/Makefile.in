@@ -562,12 +562,14 @@ ALL_TARGET_OBS = \
 	mep-tdep.o \
 	microblaze-tdep.o microblaze-linux-tdep.o \
 	mips-irix-tdep.o mips-linux-tdep.o \
+	mips-rtems-tdep.o \
 	mipsnbsd-tdep.o mips-tdep.o \
 	mn10300-linux-tdep.o mn10300-tdep.o \
 	moxie-tdep.o \
 	mt-tdep.o \
 	nto-tdep.o \
 	ppc-linux-tdep.o ppcnbsd-tdep.o ppcobsd-tdep.o ppc-sysv-tdep.o \
+	ppc-rtems-tdep.o \
 	ppc64-tdep.o rl78-tdep.o \
 	rs6000-aix-tdep.o rs6000-tdep.o ppc-ravenscar-thread.o \
 	rs6000-lynx178-tdep.o \
@@ -1487,6 +1489,7 @@ ALLDEPFILES = \
 	microblaze-tdep.c microblaze-linux-tdep.c \
 	mingw-hdep.c \
 	mips-linux-nat.c mips-linux-tdep.c \
+	mips-rtems-tdep.c \
 	mips-irix-tdep.c \
 	mips-tdep.c \
 	mipsnbsd-nat.c mipsnbsd-tdep.c \
@@ -1496,6 +1499,7 @@ ALLDEPFILES = \
 	somread.c solib-som.c \
 	posix-hdep.c \
 	ppc-sysv-tdep.c ppc-linux-nat.c ppc-linux-tdep.c ppc64-tdep.c \
+	ppc-rtems-tdep.c \
 	ppcnbsd-nat.c ppcnbsd-tdep.c \
 	ppcobsd-nat.c ppcobsd-tdep.c \
 	procfs.c \

@@ -70,13 +70,8 @@ struct lm_info
   CORE_ADDR text_addr_low;
   CORE_ADDR text_addr_high;
 
-  CORE_ADDR sec_addr_low[rap_secs];
-  CORE_ADDR sec_addr_high[rap_secs];
-
   struct sec_info *si;
 
-  //struct lm_info *l_next;
-  //struct lm_info *l_prev;
   CORE_ADDR l_next;
   CORE_ADDR l_prev;
 };
@@ -263,6 +258,7 @@ lm_info_read (CORE_ADDR lm_addr)
           int i = 0;
           gdb_byte *tmp = sm;
 
+          memset (rap_sec_size, 0, sizeof (rap_sec_size));
           while (i < sec_num)
             {
               tmp = sm + i * lmo->sec_map_size;
@@ -287,13 +283,21 @@ lm_info_read (CORE_ADDR lm_addr)
 
               rap_id = extract_typed_address (&tmp[lmo->s_rap_id_offset],
                                               ptr_type);
-              rap_sec_addr[rap_id] = rap_sec_addr[rap_id] +
+              //rap_sec_addr[rap_id] = rap_sec_addr[rap_id] +
+              //  extract_typed_address (&tmp[lmo->s_addr_offset], ptr_type);
+              sec_info->addr_low = rap_sec_addr[rap_id] +
                 extract_typed_address (&tmp[lmo->s_addr_offset], ptr_type);
-              rap_sec_size[rap_id] =
+              if (rap_id == 0)
+                lm_info->text_addr_low = sec_info->addr_low;
+
+              rap_sec_size[rap_id] +=
                 extract_typed_address (&tmp[lmo->s_size_offset],
                                        ptr_type);
-              sec_info->addr_low = rap_sec_addr[rap_id];
-              sec_info->addr_high = rap_sec_addr[rap_id] + rap_sec_size[rap_id];
+              sec_info->addr_high = sec_info->addr_low + 
+                extract_typed_address (&tmp[lmo->s_size_offset],
+                                       ptr_type);
+              //sec_info->addr_low = rap_sec_addr[rap_id];
+              //sec_info->addr_high = rap_sec_addr[rap_id] + rap_sec_size[rap_id];
               sec_info->next = NULL;
 
               if (lm_info->si == NULL)
@@ -310,15 +314,7 @@ lm_info_read (CORE_ADDR lm_addr)
             }
         }
 
-      lm_info->text_addr_low = rap_sec_addr[0];
-      lm_info->text_addr_high = rap_sec_addr[0] + rap_sec_size [0];
-
-      /* If two sections in one elf file are merged into a rap section ? */
-      for (i = 0; i < rap_secs; ++i)
-        {
-          lm_info->sec_addr_low[i] = rap_sec_addr[i]; 
-          lm_info->sec_addr_high[i] = rap_sec_addr[i] + rap_sec_size[i]; 
-        }
+      lm_info->text_addr_high = lm_info->text_addr_low + rap_sec_size [0];
 
       /* End */
     }
@@ -347,6 +343,7 @@ rtems_read_so_list (CORE_ADDR lm,
       char *tmp;
       int len;
   
+      exist = 0;
       new = XZALLOC (struct so_list);
       old_chain = make_cleanup_free_so (new);
       
@@ -410,7 +407,8 @@ rtems_read_so_list (CORE_ADDR lm,
 #if RTEMS_DEBUG
       if (!exist)
         {
-          printf ("\n\nSet --rpath to rtems-ld ?\n\n");
+          printf ("\n\nSet --rpath to rtems-ld ?\n");
+          printf ("set solib-search-path ?\n\n");
         }
       printf ("object file: %s : %s\n", exist ? tmp_name : filename, tmp);
       si = new->lm_info->si;
@@ -650,7 +648,7 @@ rtems_relocate_section_addresses (struct so_list *so,
           sec->addr = sec_info->addr_low; 
           sec->endaddr = sec_info->addr_high; 
 #if RTEMS_DEBUG
-          printf ("%s %x %x\n", sec_name, sec->addr, sec->endaddr);
+          //printf ("%s %x %x\n", sec_name, sec->addr, sec->endaddr);
 #endif
           break;
         }

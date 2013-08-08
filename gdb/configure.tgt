@@ -384,6 +384,11 @@ mips*-*-elf)
 	gdb_target_obs="mips-tdep.o remote-mips.o"
 	gdb_sim=../sim/mips/libsim.a
 	;;
+mips-*-rtems*)
+        # Target: MIPS RTEMS
+	gdb_target_obs="mips-tdep.o mips-rtems-tdep.o solib-rtems.o"
+	gdb_sim=../sim/mips/libsim.a
+        ;;
 mips*-*-*)
 	# Target: MIPS
 	gdb_target_obs="mips-tdep.o"
@@ -442,6 +447,15 @@ powerpc-*-lynx*178)
 	gdb_target_obs="rs6000-tdep.o rs6000-lynx178-tdep.o \
 			xcoffread.o monitor.o dsrec.o ppc-sysv-tdep.o \
 			ravenscar-thread.o ppc-ravenscar-thread.o"
+	;;
+powerpc-*-rtems*)
+	# Target: PowerPC RTEMS 
+	gdb_target_obs="rs6000-tdep.o monitor.o dsrec.o ppcbug-rom.o \
+			dink32-rom.o ppc-sysv-tdep.o ppc-rtems-tdep.o solib-rtems.o \
+			ravenscar-thread.o ppc-ravenscar-thread.o"
+	if test -f ../sim/ppc/Makefile; then
+	  gdb_sim=../sim/ppc/libsim.a
+	fi
 	;;
 powerpc*-*-*)
 	# Target: PowerPC running eabi
