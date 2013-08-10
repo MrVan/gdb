@@ -1314,7 +1314,9 @@ update_section_map (struct program_space *pspace,
 
   qsort (map, alloc_size, sizeof (*map), qsort_cmp);
   map_size = filter_debuginfo_sections(map, alloc_size);
-  map_size = filter_overlapping_sections(map, map_size);
+
+  /*Commented for section overlap */
+  //map_size = filter_overlapping_sections(map, map_size);
 
   if (map_size < alloc_size)
     /* Some sections were eliminated.  Trim excess space.  */
@@ -1374,11 +1376,26 @@ find_pc_section (CORE_ADDR pc)
       return NULL;
     }
 
+
+  int i = 0;
+  CORE_ADDR sec_addr, min = ~0;
+  sp = NULL;
+  for (i = 0; i < pspace_info->num_sections; i++)
+    {
+      sec_addr = obj_section_addr (pspace_info->sections[i]);
+      if ((pc - sec_addr) < min)
+      {
+        min = pc - sec_addr; 
+        sp = &(pspace_info->sections[i]);
+      }
+    }
+#if 0
   sp = (struct obj_section **) bsearch (&pc,
 					pspace_info->sections,
 					pspace_info->num_sections,
 					sizeof (*pspace_info->sections),
 					bsearch_cmp);
+#endif
   if (sp != NULL)
     return *sp;
   return NULL;

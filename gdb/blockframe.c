@@ -218,7 +218,6 @@ find_pc_partial_function_gnu_ifunc (CORE_ADDR pc, const char **name,
       && section == cache_pc_function_section)
     goto return_cached_value;
 
-  printf ("gg %s\n", section->the_bfd_section->name);
   msymbol = lookup_minimal_symbol_by_pc_section (mapped_pc, section);
   ALL_OBJFILES (objfile)
   {
