@@ -152,7 +152,7 @@ frv-*-*)
 	;;
 
 moxie-*-elf | moxie-*-rtems*)
-	gdb_target_obs="moxie-tdep.o"
+	gdb_target_obs="moxie-tdep.o moxie-rtems-tdep.o solib-rtems.o"
 	gdb_sim=../sim/moxie/libsim.a
 	;;
 
@@ -319,6 +319,11 @@ m32r*-*-linux*)
 			linux-tdep.o"
 	gdb_sim=../sim/m32r/libsim.a
 	build_gdbserver=yes
+	;;
+m32r*-*-rtems*)
+	# Target: Renesas m32r processor
+	gdb_target_obs="m32r-tdep.o monitor.o m32r-rom.o dsrec.o solib-rtems.o m32r-rtems-tdep.o remote-m32r-sdi.o"
+	gdb_sim=../sim/m32r/libsim.a
 	;;
 m32r*-*-*)
 	# Target: Renesas m32r processor
