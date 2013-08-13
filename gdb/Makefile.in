@@ -551,6 +551,7 @@ ALL_TARGET_OBS = \
 	i386-linux-tdep.o i386nbsd-tdep.o i386-nto-tdep.o i386obsd-tdep.o \
 	i386-sol2-tdep.o i386-tdep.o i387-tdep.o \
 	i386-dicos-tdep.o i386-darwin-tdep.o \
+	i386-rtems-tdep.o \
 	iq2000-tdep.o \
 	linux-tdep.o \
 	lm32-tdep.o \
@@ -558,6 +559,7 @@ ALL_TARGET_OBS = \
 	m32r-linux-tdep.o m32r-tdep.o \
 	m68hc11-tdep.o \
 	m68kbsd-tdep.o m68klinux-tdep.o m68k-tdep.o \
+	m68k-rtems-tdep.o \
 	m88k-tdep.o \
 	mep-tdep.o \
 	microblaze-tdep.o microblaze-linux-tdep.o \
@@ -1468,6 +1470,7 @@ ALLDEPFILES = \
 	i386-darwin-tdep.c i386-darwin-nat.c \
 	i386-dicos-tdep.c \
 	i386-linux-tdep.c i386-nat.c \
+	i386-rtems-tdep.c \
 	i386-sol2-nat.c i386-sol2-tdep.c \
 	i386gnu-nat.c i386gnu-tdep.c \
 	ia64-hpux-nat.c ia64-hpux-tdep.c \
@@ -1485,6 +1488,7 @@ ALLDEPFILES = \
 	m68k-tdep.c \
 	m68kbsd-nat.c m68kbsd-tdep.c \
 	m68klinux-nat.c m68klinux-tdep.c \
+	m68k-rtems-tdep.c \
 	m88k-tdep.c m88kbsd-nat.c \
 	microblaze-tdep.c microblaze-linux-tdep.c \
 	mingw-hdep.c \

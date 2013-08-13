@@ -249,6 +249,12 @@ i[34567]86-*-mingw32*)
 			windows-tdep.o"
 	build_gdbserver=yes
 	;;
+i386-*-rtems*)
+  # Target: MIPS RTEMS
+	gdb_target_obs="i386-tdep.o i386-rtems-tdep.o i387-tdep.o \
+			solib-rtems.o"
+	build_gdbserver=yes
+	;;
 i[34567]86-*-*)
 	# Target: i386
 	gdb_target_obs="i386-tdep.o i387-tdep.o"
@@ -310,6 +316,12 @@ m68hc11*-*-*|m6811*-*-*)
 	# Target: Motorola 68HC11 processor
 	gdb_target_obs="m68hc11-tdep.o"
 	gdb_sim=../sim/m68hc11/libsim.a
+	;;
+
+m68k-*-rtems*)
+	# Target: SPARC
+	gdb_target_obs="m68k-tdep.o m68k-rtems-tdep.o solib-rtems.o \
+                  monitor.o dbug-rom.o dsrec.o"
 	;;
 
 m68*-*-aout* | m68*-*-coff* | m68*-*-elf* | m68*-*-rtems* | m68*-*-uclinux* | \
