@@ -669,7 +669,7 @@ xstormy16-*-*)
 
 v850*-*-elf | v850*-*-rtems*)
 	# Target: NEC V850 processor
-	gdb_target_obs="v850-tdep.o"
+	gdb_target_obs="v850-tdep.o v850-rtems-tdep.o solib-rtems.o"
 	gdb_sim=../sim/v850/libsim.a
 	;;
 
