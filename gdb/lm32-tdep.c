@@ -573,6 +573,8 @@ lm32_gdbarch_init (struct gdbarch_info info, struct gdbarch_list *arches)
   /* Instruction disassembler.  */
   set_gdbarch_print_insn (gdbarch, print_insn_lm32);
 
+  gdbarch_init_osabi (info, gdbarch);
+
   lm32_add_reggroups (gdbarch);
   set_gdbarch_register_reggroup_p (gdbarch, lm32_register_reggroup_p);
 

@@ -128,6 +128,12 @@ bfin-*-*linux*)
 	gdb_sim=../sim/bfin/libsim.a
 	build_gdbserver=yes
 	;;
+bfin-*-rtems*)
+	# Target: Blackfin Linux
+	gdb_target_obs="bfin-tdep.o bfin-rtems-tdep.o solib-rtems.o"
+	gdb_sim=../sim/bfin/libsim.a
+	build_gdbserver=yes
+	;;
 bfin-*-*)
 	# Target: Blackfin processor
 	gdb_target_obs="bfin-tdep.o"
@@ -150,6 +156,11 @@ moxie-*-elf | moxie-*-rtems*)
 	gdb_sim=../sim/moxie/libsim.a
 	;;
 
+h8300-*-rtems*)
+	# Target: H8300 with HMS monitor and H8 simulator
+	gdb_target_obs="h8300-tdep.o monitor.o dsrec.o h8300-rtems-tdep.o solib-rtems.o"
+	gdb_sim=../sim/h8300/libsim.a
+	;;
 h8300-*-*)
 	# Target: H8300 with HMS monitor and H8 simulator
 	gdb_target_obs="h8300-tdep.o monitor.o dsrec.o"
@@ -284,6 +295,10 @@ iq2000-*-*)
 	gdb_sim=../sim/iq2000/libsim.a
 	;;
 
+lm32-*-rtems*)		
+	gdb_target_obs="lm32-tdep.o lm32-rtems-tdep.o solib-rtems.o" 
+	gdb_sim=../sim/lm32/libsim.a
+	;;
 lm32-*-*)		
 	gdb_target_obs="lm32-tdep.o" 
 	gdb_sim=../sim/lm32/libsim.a
